@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kosen Systems | Precision Engineering</title>
+    
+    <link rel="icon" type="image/png" href="Favicon 32x32 White.svg">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Subtle Fade-in Animation for Premium Feel */
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            animation: fadeIn 2s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* The Image Logo Styling */
+        .brand-logo {
+            max-width: 280px; 
+            height: auto;
+            margin-bottom: 3rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Typography & Copy */
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            color: var(--text-muted);
+        }
+
+        /* Form Styling - Sharp, Industrial */
+        .form-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 3rem;
+        }
+
+        input[type="email"] {
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--text-main);
+            padding: 12px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            width: 250px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--accent);
+        }
+
+        button {
+            background-color: var(--accent);
+            color: var(--bg-color);
+            border: none;
+            padding: 12px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 11px 24px;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.75rem;
+            color: #888888;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            .form-group {
+                flex-direction: column;
+            }
+            input[type="email"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="Favicon_48x48_Black.png" alt="Kosen Systems Logo" class="brand-logo">
+
+        <h1>The Invisible That Matters</h1>
+        <p>We are engineering high-efficiency power modules for industrial and embedded applications. The KS-MP1584 series is currently undergoing final fabrication testing.</p>
+
+        <!-- <div class="form-group">
+            <input type="email" placeholder="ENTER YOUR EMAIL" required>
+            <button type="submit">Notify Me</button>
+        </div> -->
+    </div>
+
+    <div class="footer">
+        &copy; 2026 Kosen Systems. All rights reserved.
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+# Kosen Systems Storefront
+
+Adafruit-Style Hardware Module Store
+
+## Overview
+
+This repository defines the architecture and framework for building an **electronics module storefront similar in structure to Adafruit**.
+
+The platform will allow:
+
+* Selling embedded and IoT hardware modules
+* Hosting documentation and tutorials
+* Managing orders and inventory through an admin dashboard
+* Providing schematics, firmware, and developer resources
+
+The system is designed to be **scalable, developer-friendly, and modern**, using **Supabase as the backend platform** and **Razorpay for payments**.
+
+---
+
+# System Architecture
+
+```text
+Customer
+   │
+   ▼
+Frontend (Next.js / React)
+   │
+   ▼
+Backend API (Node.js / Edge Functions)
+   │
+   ├─ Product Service
+   ├─ Order Service
+   ├─ Documentation Service
+   │
+   ▼
+Supabase Backend
+ ├ PostgreSQL Database
+ ├ Authentication
+ ├ Storage
+ │
+ ▼
+Payment Gateway
+ └ Razorpay
+```
+
+This architecture supports:
+
+* Product sales
+* Hardware documentation
+* Tutorials and guides
+* Order management
+* Admin control panel
+* Secure authentication
+
+---
+
+# Project Structure
+
+```text
+kosen-systems-store/
+│
+├── frontend/
+├── backend/
+├── admin-dashboard/
+├── docs-site/
+├── hardware/
+├── database/
+│
+├── docker/
+├── scripts/
+│
+├── .env
+└── README.md
+```
+
+| Folder          | Purpose                              |
+| --------------- | ------------------------------------ |
+| frontend        | Customer-facing ecommerce website    |
+| backend         | API server and business logic        |
+| admin-dashboard | Admin control panel                  |
+| docs-site       | Hardware tutorials and documentation |
+| hardware        | Schematics, firmware, and PCB files  |
+| database        | Database schemas and migrations      |
+| scripts         | Automation utilities                 |
+
+---
+
+# Frontend Structure
+
+The frontend powers the **customer storefront**.
+
+### Recommended Stack
+
+* Next.js
+* React
+* TailwindCSS
+
+```text
+frontend/
+│
+├── public/
+│   ├── images
+│   ├── logos
+│   └── icons
+│
+├── src/
+│
+│   ├── components/
+│   │
+│   │   ├── layout/
+│   │   │   ├── Navbar
+│   │   │   ├── Footer
+│   │   │   └── SearchBar
+│   │   │
+│   │   ├── product/
+│   │   │   ├── ProductCard
+│   │   │   ├── ProductGallery
+│   │   │   ├── ProductSpecs
+│   │   │   └── ProductDocumentation
+│   │   │
+│   │   ├── cart/
+│   │   │   ├── CartItem
+│   │   │   └── CartSummary
+│   │   │
+│   │   └── ui/
+│   │       ├── Button
+│   │       ├── Badge
+│   │       └── Tabs
+│
+│   ├── pages/
+│   │
+│   │   ├── index.js
+│   │   ├── products/
+│   │   │    └── index.js
+│   │   │
+│   │   ├── product/
+│   │   │    └── [id].js
+│   │   │
+│   │   ├── cart.js
+│   │   ├── checkout.js
+│   │   ├── tutorials.js
+│   │   └── guides.js
+│
+│   ├── context/
+│   │   ├── CartContext.js
+│   │   └── UserContext.js
+│
+│   ├── services/
+│   │   ├── productService.js
+│   │   ├── orderService.js
+│   │   └── tutorialService.js
+│
+│   ├── utils/
+│   │   └── helpers.js
+│
+│   └── styles/
+│       └── globals.css
+│
+└── package.json
+```
+
+---
+
+# Backend Structure
+
+The backend handles:
+
+* product APIs
+* order processing
+* payment verification
+* authentication
+* tutorials management
+
+### Recommended Stack
+
+* Node.js
+* Express
+* Supabase SDK
+
+```text
+backend/
+│
+├── src/
+│
+│   ├── controllers/
+│   │   ├── productController.js
+│   │   ├── orderController.js
+│   │   ├── tutorialController.js
+│   │   └── authController.js
+│
+│   ├── routes/
+│   │   ├── productRoutes.js
+│   │   ├── orderRoutes.js
+│   │   ├── tutorialRoutes.js
+│   │   └── authRoutes.js
+│
+│   ├── models/
+│   │   ├── Product.js
+│   │   ├── Order.js
+│   │   ├── Tutorial.js
+│   │   └── User.js
+│
+│   ├── middleware/
+│   │   ├── authMiddleware.js
+│   │   └── errorHandler.js
+│
+│   ├── services/
+│   │   ├── paymentService.js
+│   │   └── emailService.js
+│
+│   ├── config/
+│   │   ├── supabaseClient.js
+│   │   └── environment.js
+│
+│   └── server.js
+│
+└── package.json
+```
+
+---
+
+# Supabase Integration
+
+Supabase provides:
+
+* PostgreSQL database
+* authentication system
+* file storage
+* real-time APIs
+
+### Supabase Usage
+
+| Feature  | Supabase Service               |
+| -------- | ------------------------------ |
+| Database | PostgreSQL                     |
+| Auth     | Supabase Auth                  |
+| Storage  | Supabase Storage               |
+| API      | Supabase REST / Edge Functions |
+
+Example database tables:
+
+### Products Table
+
+```text
+products
+   id
+   name
+   price
+   description
+   category
+   images
+   datasheet
+   specs
+   stock
+```
+
+### Orders Table
+
+```text
+orders
+   id
+   user_id
+   items
+   total
+   payment_status
+   order_status
+```
+
+### Tutorials Table
+
+```text
+tutorials
+   id
+   title
+   product_id
+   content
+   images
+```
+
+---
+
+# Razorpay Payment Integration
+
+Payments will be processed using **Razorpay**.
+
+### Payment Flow
+
+```text
+User Checkout
+   │
+   ▼
+Create Razorpay Order
+   │
+   ▼
+User Pays via Razorpay
+   │
+   ▼
+Webhook Verification
+   │
+   ▼
+Update Order in Supabase
+```
+
+Supported payment methods:
+
+* UPI
+* Debit / Credit Card
+* Net Banking
+* Wallets
+
+---
+
+# Documentation System
+
+A documentation portal similar to Adafruit guides.
+
+```text
+docs-site/
+│
+├── guides/
+│   ├── buck-converter-guide.md
+│   ├── esp32-iot-board-guide.md
+│
+├── images/
+│
+├── examples/
+│   ├── arduino
+│   └── micropython
+│
+└── index.js
+```
+
+Example guide:
+
+```
+How to use the MP1584 Buck Converter
+------------------------------------
+
+Input Voltage: 6V–28V
+Output Voltage: Adjustable
+
+Steps:
+1. Connect VIN
+2. Adjust potentiometer
+3. Measure output voltage
+```
+
+---
+
+# Hardware Repository
+
+Hardware files should be available to users.
+
+```text
+hardware/
+│
+├── buck-converter/
+│   ├── schematic
+│   ├── pcb
+│   ├── gerber
+│   └── datasheet
+│
+├── esp32-iot-board/
+│   ├── schematic
+│   ├── pcb
+│   └── firmware
+```
+
+Providing hardware documentation builds **trust with engineers**.
+
+---
+
+# Admin Dashboard
+
+The admin dashboard manages:
+
+* products
+* orders
+* tutorials
+* inventory
+
+```text
+admin-dashboard/
+│
+├── src/
+│
+│   ├── pages/
+│   │   ├── dashboard.js
+│   │   ├── products.js
+│   │   ├── add-product.js
+│   │   ├── orders.js
+│   │   └── tutorials.js
+│
+│   ├── components/
+│   │   ├── Sidebar
+│   │   ├── ProductForm
+│   │   └── OrderTable
+│
+│   └── services/
+│       ├── productService.js
+│       └── orderService.js
+│
+└── package.json
+```
+
+---
+
+# Website Layout
+
+```
+HEADER
+ ├ Logo
+ ├ Categories
+ ├ Search
+ └ Cart
+
+HOMEPAGE
+ ├ Featured Products
+ ├ Categories
+ ├ New Products
+ ├ Tutorials
+ └ Documentation
+
+FOOTER
+ ├ Docs
+ ├ Support
+ ├ Contact
+ └ Policies
+```
+
+---
+
+# Recommended Tech Stack
+
+| Layer    | Technology          |
+| -------- | ------------------- |
+| Frontend | Next.js             |
+| UI       | TailwindCSS         |
+| Backend  | Node.js / Express   |
+| Database | Supabase PostgreSQL |
+| Auth     | Supabase Auth       |
+| Storage  | Supabase Storage    |
+| Payments | Razorpay            |
+| Hosting  | Vercel              |
+
+---
+
+# Hardware Product Page Requirements
+
+Each module page should include:
+
+* schematic
+* pinout diagram
+* firmware examples
+* datasheet
+* application circuits
+
+This improves developer trust and increases product adoption.
+
+---
+
+# Future Improvements
+
+Possible future features:
+
+* community projects
+* GitHub integration
+* developer APIs
+* customer accounts
+* product reviews
+* forum support
+
+---
+
+# Goal
+
+Build a **professional electronics hardware platform similar in structure to Adafruit**, focused on:
+
+* high-quality hardware modules
+* strong technical documentation
+* developer-friendly resources
+
+This architecture ensures the platform remains **scalable, maintainable, and hardware-developer focused**.
